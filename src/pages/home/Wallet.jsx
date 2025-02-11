@@ -9,7 +9,7 @@ export default function Wallet({
     const wallet = useSelector((state) => state.main.wallet);
 
     return (
-        <SafeAreaView className='flex-1'>
+        <SafeAreaView className=''>
             <StatusBar backgroundColor={"#fff"} />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}

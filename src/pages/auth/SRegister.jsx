@@ -1,41 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StatusBar, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StatusBar, Image, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Images } from '../../assets/images'; // Make sure you have the appropriate image
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserRegister } from '../../../store/Actions/AuthAction';
+import { StationRegister } from '../../../store/Actions/stationAction';
+import { getLocation } from '../../../store/Actions/userActions';
 
 export default function SRegister({ navigation }) {
     const [name, setName] = useState('');
+    const [desc, setDesc] = useState('');
+    const [pass, setPass] = useState('');
+    const [price, setPrice] = useState('');
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
-    const [image, setImage] = React.useState(null);
+    const location = useSelector((state) => state.main.location);
+
     const dispatch = useDispatch();
-
-    const pickImage = async () => {
-        let result = await ImagePicker.openPicker({
-            width: 300,
-            height: 300,
-            cropping: true,
-            compressImageQuality: 0.7,
-
-        });
-
-        if (result.cancelled) {
-        }
-
-        if (!result.cancelled) {
-            const newImageUri = Platform.OS === "ios" ? 'file:///' + result?.sourceURL.split('file:/').join('') : 'file:///' + result?.path.split('file:/').join('')
-            const uriParts = result?.path?.split('.')
-            const fileType = uriParts[uriParts.length - 1];
-            setImage({
-                type: `image/${fileType}`,
-                uri: result?.path,
-                name: `photo.${fileType}`
-            });
-        }
-    };
-
     return (
         <View className=" h-full w-full bg-white">
             <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
@@ -48,7 +29,7 @@ export default function SRegister({ navigation }) {
 
                     {/* Form Section */}
                     <View className=" rounded-t-3xl space-y-6 w-full h-full items-center justify-evenly">
-                        <Text className="text-primary text-4xl py-2 text-center w-[88%] font-heading">
+                        <Text className="text-blue-500 text-4xl py-2 text-center w-[88%] font-heading">
                             Sign up <Text className="font-body text-black"> your Account</Text>
                         </Text>
                         {/* Name Input */}
@@ -67,21 +48,21 @@ export default function SRegister({ navigation }) {
                             <TextInput
                                 className="bg-white border-b text-lg h-[100px] px-4 py-2 w-[88%] font-heading border-gray-400"
                                 placeholder="Enter your full name"
-                                value={name}
+                                value={desc}
                                 multiline={true}
-                                onChangeText={(text) => setName(text)}
+                                onChangeText={(text) => setDesc(text)}
                                 placeholderTextColor="#8b8b8b"
                             />
                         </View>
                         <View className="w-full items-center">
                             <Text className="w-[88%] self-center text-start font-heading text-lg">Passcode</Text>
                             <TextInput
-                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-primary' : 'border-gray-400'
+                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-blue-500' : 'border-gray-400'
                                     }`}
                                 placeholder="1234"
                                 maxLength={4}
-                                value={phone}
-                                onChangeText={(text) => setPhone(text)}
+                                value={pass}
+                                onChangeText={(text) => setPass(text)}
                                 keyboardType="phone-pad"
                                 placeholderTextColor="#8b8b8b"
                             />
@@ -89,11 +70,11 @@ export default function SRegister({ navigation }) {
                         <View className="w-full items-center">
                             <Text className="w-[88%] self-center text-start font-heading text-lg">Price</Text>
                             <TextInput
-                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-primary' : 'border-gray-400'
+                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-blue-500' : 'border-gray-400'
                                     }`}
                                 placeholder="Price per % of charge"
-                                value={phone}
-                                onChangeText={(text) => setPhone(text)}
+                                value={price}
+                                onChangeText={(text) => setPrice(text)}
                                 keyboardType="phone-pad"
                                 placeholderTextColor="#8b8b8b"
                             />
@@ -103,7 +84,7 @@ export default function SRegister({ navigation }) {
                         <View className="w-full items-center">
                             <Text className="w-[88%] self-center text-start font-heading text-lg">Phone</Text>
                             <TextInput
-                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-primary' : 'border-gray-400'
+                                className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-blue-500' : 'border-gray-400'
                                     }`}
                                 placeholder="9876543210"
                                 value={phone}
@@ -117,9 +98,23 @@ export default function SRegister({ navigation }) {
                         <TouchableOpacity
                             activeOpacity={0.7}
                             onPress={() => {
-                                dispatch(UserRegister(name, phone, setLoading, navigation));
+                                dispatch(StationRegister({
+                                    name: name,
+                                    description: desc,
+                                    passcode: pass,
+                                    price: price,
+                                    phone_number: phone,
+                                    latitude: location?.latitude,
+                                    longitude: location?.longitude,
+                                    address: location?.address,
+                                    city: location?.city,
+                                    state: location?.state,
+                                    country: location?.country,
+                                    postal_code: location?.pin_code,
+
+                                }, setLoading, navigation));
                             }}
-                            className="bg-primary justify-center items-center h-[50px] w-[88%] rounded-lg"
+                            className="bg-blue-500 justify-center items-center h-[50px] w-[88%] rounded-lg"
                         >
                             <Text className="text-white text-lg text-center font-semibold font-body">
                                 Register
@@ -136,7 +131,7 @@ export default function SRegister({ navigation }) {
                         >
                             <Text className="text-black text-lg text-center font-body">
                                 Already have an account?{' '}
-                                <Text className="text-primary font-medium font-heading">Login Now</Text>
+                                <Text className="text-blue-500 font-medium font-heading">Login Now</Text>
                             </Text>
                         </TouchableOpacity>
                     </View>

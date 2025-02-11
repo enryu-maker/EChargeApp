@@ -4,6 +4,7 @@ import { Images } from '../../assets/images'; // Ensure correct image path
 import { useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getOtp } from '../../../store/Actions/AuthAction';
+import { StationLogin } from '../../../store/Actions/stationAction';
 
 export default function SLogin({ navigation }) {
     const [loading, setLoading] = useState(false);
@@ -18,7 +19,10 @@ export default function SLogin({ navigation }) {
             return;
         }
         setLoading(true);
-        dispatch(getOtp(phone, setLoading, navigation));
+        dispatch(StationLogin({
+            phone_number: phone,
+            otp: passcode
+        }, setLoading, navigation));
     };
 
     return (

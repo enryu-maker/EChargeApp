@@ -25,7 +25,7 @@ export default function Order({
         Linking.openURL(url).catch((err) => console.error("Failed to open Google Maps:", err));
     };
     return (
-        <SafeAreaView className='flex-1'>
+        <SafeAreaView className=''>
             <StatusBar backgroundColor={"#fff"} />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}

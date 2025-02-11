@@ -17,7 +17,7 @@ export default function Settings({
         dispatch(getUserWallet(setLoading))
     }, [dispatch])
     return (
-        <SafeAreaView className='flex-1'>
+        <SafeAreaView className=' flex-1'>
             <StatusBar backgroundColor={"#fff"} />
             <View className='flex-1 h-full w-full  justify-start items-start px-4'>
                 <Text className="text-primary text-2xl py-3 text-start w-[88%] font-heading">

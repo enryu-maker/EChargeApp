@@ -16,7 +16,7 @@ export default function ContractorInfo({ navigation, route }) {
     return (
         <>
 
-            <SafeAreaView className="flex-1 bg-white  ">
+            <SafeAreaView className=" bg-white mt-5  ">
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
 
@@ -31,7 +31,6 @@ export default function ContractorInfo({ navigation, route }) {
                     <View className=" p-4  ">
                         <View
                             className=' flex-row justify-between  '>
-                            <Image source={{ uri: `data:image/png;base64,${route?.params?.data?.image}` }} className=' h-20 w-20 rounded-full' />
                             <View className='w-[70%]'>
                                 <Text className="font-heading text-2xl font-bold text-primary mb-2">{route?.params?.data?.name} </Text>
                                 <Text className="font-body text-gray-700 text-justify mb-2">{route?.params?.data?.description}</Text>

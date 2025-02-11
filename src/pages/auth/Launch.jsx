@@ -1,10 +1,17 @@
-import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StatusBar, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { Images } from '../../assets/images'
+import { getLocation } from '../../../store/Actions/userActions'
+import { useDispatch } from 'react-redux'
 
 export default function Launch({
     navigation
 }) {
+    const dispatch = useDispatch()
+    const [loading, setLoading] = React.useState(false)
+    React.useEffect(() => {
+        dispatch(getLocation(setLoading, Platform.OS))
+    }, [dispatch])
     return (
         <View className=" bg-white h-full w-full">
             <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />

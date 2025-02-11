@@ -21,11 +21,11 @@ export default function Home({ navigation }) {
     // Contractor data
 
     useEffect(() => {
-        // dispatch(getLocation(setLoading, Platform.OS));
+        dispatch(getLocation(setLoading, Platform.OS));
     }, [dispatch]);
 
     return (
-        <View className="bg-white flex-1 h-full w-full">
+        <View className="bg-white flex-1 h-full w-full mt-6">
             <StatusBar barStyle="dark-content" translucent />
             {loading ? (
                 <View className="flex-1 justify-center items-center">
@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
                 </View>
             ) : (
                 <MapView
-                    className="h-full w-full"
+                    className="h-full w-full "
                     showsUserLocation={true}
                     initialRegion={{
                         latitude: 19.9975,
@@ -48,7 +48,7 @@ export default function Home({ navigation }) {
                     }}
                 >
                     {station.map((contractor, index) => {
-                        if (contractor?.is_active && contractor?.fuel_available) {
+                        if (contractor?.is_active) {
                             return (
                                 <Marker
                                     key={index}
@@ -62,7 +62,7 @@ export default function Home({ navigation }) {
                                         })
                                     }}
                                 >
-                                    <Text className="text-center text-2xl">⛽</Text>
+                                    <Text className="text-center text-2xl">🔋</Text>
                                 </Marker>
                             )
                         }

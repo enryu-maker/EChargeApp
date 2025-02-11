@@ -9,7 +9,7 @@ export default function Otp({ navigation, route }) {
     console.log(route)
     const [loading, setLoading] = useState(false);
     const [otp, setOtp] = useState('');
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     return (
         <View className=" bg-white h-screen w-screen ">

@@ -5,14 +5,16 @@ import axiosIns, { baseURL } from "../../src/helper/Helper";
 import Toast from "react-native-toast-message";
 
 export const getLocation = (setLoading, type) => {
+    console.log(type)
     setLoading(true)
     return async dispatch => {
         if (type === "ios") {
             Geolocation.getCurrentPosition(
                 async (position) => {
-                    console.log(position)
+                    console.log("ios", position)
                     await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&apiKey=328fd33ba9f0413d9b38d214f042e36c`).
                         then((res) => {
+                            console.log("data", res.data)
                             const city = res.data.features[0].properties.city;
                             const pin_code = res.data.features[0].properties.postcode;
                             const state = res.data.features[0].properties.state;
@@ -51,10 +53,10 @@ export const getLocation = (setLoading, type) => {
                 enableHighAccuracy: true,
                 timeout: 60000,
             })
-                .then(location => {
-                    console.log(location)
-                    axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location?.latitude}&lon=${location?.longitude}&apiKey=328fd33ba9f0413d9b38d214f042e36c`).
+                .then(async location => {
+                    await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location?.latitude}&lon=${location?.longitude}&apiKey=328fd33ba9f0413d9b38d214f042e36c`).
                         then((res) => {
+                            const address = res.data.features[0].properties.address_line1;
                             const city = res.data.features[0].properties.city;
                             const pin_code = res.data.features[0].properties.postcode;
                             const state = res.data.features[0].properties.state;
@@ -65,6 +67,7 @@ export const getLocation = (setLoading, type) => {
                                 type: 'GET_LOCATION',
                                 payload: {
                                     city: city,
+                                    address: address,
                                     state: state,
                                     country: country,
                                     pin_code: pin_code,
@@ -80,8 +83,9 @@ export const getLocation = (setLoading, type) => {
                         })
                 })
                 .catch(error => {
+                    console.log("error", error);
                     const { code, message } = error;
-                    console.warn(code, message);
+                    console.log(code, message);
                 })
         }
 
