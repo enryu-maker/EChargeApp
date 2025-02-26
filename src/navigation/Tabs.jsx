@@ -35,7 +35,7 @@ export default function Tab() {
                                     resizeMode="contain"
                                     className="h-[22px] w-[22px]"
                                     style={{
-                                        tintColor: focused ? '#29B675' : '#000',
+                                        tintColor: focused ? '#3b82f6' : '#000',
                                     }}
                                     accessible
                                     accessibilityLabel={`${route.name} tab`}
@@ -45,7 +45,7 @@ export default function Tab() {
                     );
                 },
                 tabBarStyle: {
-                    backgroundColor: '#29B675',
+                    backgroundColor: '#3b82f6',
                     height: Platform.OS === 'ios' ? 100 : 80,
                     justifyContent: 'space-evenly',
                     alignItems: 'center',

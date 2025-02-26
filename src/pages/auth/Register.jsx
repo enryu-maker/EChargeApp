@@ -11,31 +11,6 @@ export default function Register({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = React.useState(null);
     const dispatch = useDispatch();
-
-    const pickImage = async () => {
-        let result = await ImagePicker.openPicker({
-            width: 300,
-            height: 300,
-            cropping: true,
-            compressImageQuality: 0.7,
-
-        });
-
-        if (result.cancelled) {
-        }
-
-        if (!result.cancelled) {
-            const newImageUri = Platform.OS === "ios" ? 'file:///' + result?.sourceURL.split('file:/').join('') : 'file:///' + result?.path.split('file:/').join('')
-            const uriParts = result?.path?.split('.')
-            const fileType = uriParts[uriParts.length - 1];
-            setImage({
-                type: `image/${fileType}`,
-                uri: result?.path,
-                name: `photo.${fileType}`
-            });
-        }
-    };
-
     return (
         <View className=" h-full w-full bg-white">
             <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
@@ -48,53 +23,11 @@ export default function Register({ navigation }) {
 
                     {/* Form Section */}
                     <View className=" rounded-t-3xl space-y-6 w-full items-center justify-center">
-                        <Text className="text-primary text-4xl py-2 text-center w-[88%] font-heading">
+                        <Text className="text-blue-500 text-4xl py-2 text-center w-[88%] font-heading">
                             Sign up <Text className="font-body text-black"> your Account</Text>
                         </Text>
 
                         <View className="space-y-6 w-full mx-auto justify-center items-center">
-                            <View
-                                className=' justify-center items-center'
-                            >
-                                <TouchableOpacity onPress={pickImage}>
-                                    <View
-                                        className=' justify-center items-center'
-                                    >
-                                        {image ? (
-                                            <View>
-                                                <Image
-                                                    source={{ uri: image?.uri }}
-                                                    className='w-[80px] h-[80px] border rounded-full justify-center items-center text-center'
-                                                    resizeMode='cover'
-                                                />
-                                            </View>
-                                        ) : (
-                                            <View
-                                                className='w-[80px] h-[80px] border rounded-full justify-center items-center text-center'
-
-                                            >
-                                            </View>
-                                        )}
-                                    </View>
-                                    <View
-                                    >
-                                        <Text
-
-                                            className=' text-center font-suseR'
-                                        >
-                                            Upload your display pic*
-                                        </Text>
-                                        {image === null && (
-                                            <Text
-
-                                                className=' text-red-500 text-sm text-center'
-                                            >
-                                                Image is compulsory
-                                            </Text>
-                                        )}
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
                             {/* Name Input */}
                             <View className="w-full items-center">
                                 <Text className="w-[88%] self-center text-start font-heading text-lg">Name</Text>
@@ -111,7 +44,7 @@ export default function Register({ navigation }) {
                             <View className="w-full items-center">
                                 <Text className="w-[88%] self-center text-start font-heading text-lg">Phone</Text>
                                 <TextInput
-                                    className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-primary' : 'border-gray-400'
+                                    className={`bg-white border-b text-lg h-[50px] px-4 py-2 w-[88%] font-heading ${phone.length > 0 ? 'border-blue-500' : 'border-gray-400'
                                         }`}
                                     placeholder="9876543210"
                                     value={phone}
@@ -127,7 +60,7 @@ export default function Register({ navigation }) {
                                 onPress={() => {
                                     dispatch(UserRegister(name, phone, setLoading, navigation));
                                 }}
-                                className="bg-primary justify-center items-center h-[50px] w-[88%] rounded-lg"
+                                className="bg-blue-500 justify-center items-center h-[50px] w-[88%] rounded-lg"
                             >
                                 <Text className="text-white text-lg text-center font-semibold font-body">
                                     Register
@@ -144,7 +77,7 @@ export default function Register({ navigation }) {
                             >
                                 <Text className="text-black text-lg text-center font-body">
                                     Already have an account?{' '}
-                                    <Text className="text-primary font-medium font-heading">Login Now</Text>
+                                    <Text className="text-blue-500 font-medium font-heading">Login Now</Text>
                                 </Text>
                             </TouchableOpacity>
                         </View>

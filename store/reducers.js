@@ -1,5 +1,6 @@
 const initialState = {
     access: null,
+    vendor: false,
     location: {},
     station: [],
     profile: {},
@@ -7,6 +8,9 @@ const initialState = {
     vehicle: [],
     slot: [],
     booking: [],
+    order: [],
+    stationprofile: {},
+    income: 0
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -15,6 +19,21 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 access: action.payload,
+            };
+        case 'SET_VENDOR':
+            return {
+                ...state,
+                vendor: action.payload,
+            };
+        case 'SET_ORDER':
+            return {
+                ...state,
+                order: action.payload,
+            };
+        case 'SET_SPROFILE':
+            return {
+                ...state,
+                stationprofile: action.payload,
             };
         case 'GET_LOCATION':
             return {
@@ -25,6 +44,11 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 station: action.payload,
+            };
+        case 'SET_INCOME':
+            return {
+                ...state,
+                income: action.payload,
             };
         case 'PROFILE':
             return {

@@ -4,9 +4,12 @@ import Auth from './Auth'
 import Home from './Home'
 import { useDispatch, useSelector } from 'react-redux';
 import { Init } from '../../store/Actions/AuthAction';
+import SHome from './SHome';
 
 export default function Index() {
     const access = useSelector((state) => state.main.access);
+    const vendor = useSelector((state) => state.main.vendor);
+    console.log(vendor)
     const dispatch = useDispatch()
     React.useEffect(() => {
         dispatch(Init())
@@ -15,7 +18,7 @@ export default function Index() {
     return (
         <>
             {
-                access != null ? <Home /> : <Auth />
+                access != null ? vendor ? <SHome /> : <Home /> : <Auth />
             }
         </>
     )

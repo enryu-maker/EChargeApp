@@ -7,45 +7,56 @@ export const Init = () => {
   return async dispatch => {
     try {
       let access = await AsyncStorage.getItem('access');
+      let vendor = await AsyncStorage.getItem('vendor');
+
       console.log(access)
       dispatch({
         type: 'SET_ACCESS',
         payload: access,
+      });
+      dispatch({
+        type: 'SET_VENDOR',
+        payload: vendor,
       });
     } catch (error) {
       dispatch({
         type: 'SET_ACCESS',
         payload: null,
       });
+      dispatch({
+        type: 'SET_VENDOR',
+        payload: false,
+      });
     }
   };
 };
 
-export const UserRegister = (name, number, image, setLoading, navigation) => {
+export const UserRegister = (name, number, setLoading, navigation) => {
   return async dispatch => {
-    const formdata = new FormData();
-    formdata.append('name', name);
-    formdata.append('phone_number', '+91' + number);
-    formdata.append('icon', image);
     setLoading(true);
     try {
-      let response = await axios.post(baseURL + '/v1/user/register/',
-        formdata,
+      let response = await axios.post(`${baseURL}/v1/user/register/`,
+        new URLSearchParams({
+          name: name,
+          phone_number: number,
+        }).toString(),
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-        },
+        }
       );
-      console.log(response)
+
+      console.log(response.data);
       Toast.show({
         type: 'success',
-        text1: response?.data?.message,
+        text1: response?.data?.message || 'Registered successfully!',
         visibilityTime: 2000,
         autoHide: true,
         topOffset: 50,
         bottomOffset: 40,
       });
+
       setTimeout(() => {
         navigation.navigate('Login', {
           number: number,
@@ -53,14 +64,16 @@ export const UserRegister = (name, number, image, setLoading, navigation) => {
         setLoading(false);
       }, 2000);
     } catch (error) {
+      console.log(error?.response?.data);
       Toast.show({
         type: 'error',
-        text1: error?.response?.data?.message,
+        text1: error?.response?.data?.detail || 'Registration failed!',
         visibilityTime: 2000,
         autoHide: true,
         topOffset: 50,
         bottomOffset: 40,
       });
+
       setLoading(false);
     }
   };

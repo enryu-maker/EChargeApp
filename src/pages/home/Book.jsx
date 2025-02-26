@@ -16,13 +16,13 @@ export default function ContractorInfo({ navigation, route }) {
     return (
         <>
 
-            <SafeAreaView className=" bg-white mt-5  ">
+            <SafeAreaView className=" bg-white mt-5 flex-1  ">
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
 
                     className=" p-2 h-10 w-10 rounded-full"
                 >
-                    <Image source={Images.left} className=' text-primary h-10 w-10' />
+                    <Image source={Images.left} className=' text-blue-500 h-10 w-10' />
                 </TouchableOpacity>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
@@ -32,7 +32,7 @@ export default function ContractorInfo({ navigation, route }) {
                         <View
                             className=' flex-row justify-between  '>
                             <View className='w-[70%]'>
-                                <Text className="font-heading text-2xl font-bold text-primary mb-2">{route?.params?.data?.name} </Text>
+                                <Text className="font-heading text-2xl font-bold text-blue-500 mb-2">{route?.params?.data?.name} </Text>
                                 <Text className="font-body text-gray-700 text-justify mb-2">{route?.params?.data?.description}</Text>
                             </View>
                         </View>
@@ -55,9 +55,10 @@ export default function ContractorInfo({ navigation, route }) {
             </SafeAreaView>
             <TouchableOpacity
                 onPress={() => navigation.navigate('BookStation', {
-                    id: route?.params?.data?.id
+                    id: route?.params?.data?.id,
+                    rate: route?.params?.data?.price
                 })}
-                className="bg-primary h-20 justify-center items-center"
+                className="bg-blue-500 h-20 justify-center items-center"
             >
                 <Text className="text-white text-center text-lg font-heading">Book Slot</Text>
             </TouchableOpacity>

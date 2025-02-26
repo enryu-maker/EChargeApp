@@ -1,22 +1,21 @@
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity, FlatList, Linking } from 'react-native'
 import React from 'react'
-import { Images } from '../../assets/images'
 import { useDispatch, useSelector } from 'react-redux'
-import { getBooking, getSlot } from '../../../store/Actions/userActions'
+import { getOrders } from '../../../../store/Actions/stationAction'
+import { Images } from '../../../assets/images'
 
-export default function Order({
+export default function OrderStation({
     navigation
 }) {
     const dispatch = useDispatch()
-    const booking = useSelector((state) => state.main.booking)
-    console.log(booking)
+    const order = useSelector((state) => state.main.order)
+    console.log(order)
 
-    const [loading, setLoading] = React.useState(false)
     React.useEffect(() => {
-        dispatch(getBooking(setLoading))
+        dispatch(getOrders())
     }, [])
     return (
-        <SafeAreaView className=' flex-1 mt-5 bg-white'>
+        <SafeAreaView className=' flex-1 bg-white'>
             <StatusBar backgroundColor={"#fff"} />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
@@ -30,19 +29,16 @@ export default function Order({
                     Bookings
                 </Text>
                 <FlatList
-                    data={booking}
+                    data={order}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity
                             key={index}
-                            className='bg-gray-100 rounded-md w-[350px]  items-start px-5 py-2'>
+                            className='bg-gray-100 rounded-md items-start p-4 my-4 mx-2'>
                             <Text className="text-blue-500 text-sm font-body">
                                 {item.order_id}
                             </Text>
                             <Text className="text-black text-base font-body">
-                                ₹ {item.amount}
-                            </Text>
-                            <Text className="text-black text-base font-body">
-                                {item?.station?.name} | {item?.station?.location}
+                                {item?.user_name} | ₹ {item.amount}
                             </Text>
                             <Text className="text-black text-base font-body">
                                 Status: {item.status === 'Placed' ? <Text className='text-red-500'>Placed</Text> : <Text className='text-green-500'>Completed</Text>}

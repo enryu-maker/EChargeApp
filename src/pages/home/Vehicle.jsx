@@ -15,17 +15,17 @@ export default function Vehicle({
         dispatch(getVehicle(setLoading))
     }, [dispatch])
     return (
-        <SafeAreaView className=''>
+        <SafeAreaView className=' bg-white flex-1'>
             <StatusBar backgroundColor={"#fff"} />
             <View className='h-[50px] w-full flex-row  justify-between mt-6  items-center px-4'>
-                <Text className="text-primary text-2xl py-3 text-start  font-heading">
+                <Text className="text-blue-500 text-2xl py-3 text-start  font-heading">
                     Vehicle
                 </Text>
                 <TouchableOpacity
                     onPress={() => {
                         navigation.navigate("AddVehicle")
                     }}
-                    className='bg-primary rounded-md'>
+                    className='bg-blue-500 rounded-md'>
                     <Text className="text-white text-base py-1 px-3 text-start font-body">
                         Add +
                     </Text>
@@ -38,10 +38,10 @@ export default function Vehicle({
                         onPress={() => {
                             navigation.navigate("VehicleDetails", { item })
                         }}
-                        className='bg-white rounded-md flex-row space-x-5 items-center p-4 my-4 mx-4'>
-                        <Image source={Images.car} tintColor={"#29b675"} className='w-12 h-12' />
+                        className='bg-gray-100 rounded-md flex-row space-x-5 items-center p-4 my-4 mx-4'>
+                        <Image source={Images.car} tintColor={"#3b82f6"} className='w-12 h-12' />
                         <View>
-                            <Text className="text-primary text-lg font-heading">
+                            <Text className="text-blue-500 text-lg font-heading">
                                 {item.vehicle_number}
                             </Text>
                             <Text className="text-black text-lg font-body">

@@ -19,16 +19,16 @@ export default function Topup({
         dispatch(getUserWallet(setLoading))
     };
     return (
-        <SafeAreaView className='flex-1'>
+        <SafeAreaView className=' flex-1 bg-white mt-5 '>
             <StatusBar backgroundColor={"#fff"} />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 className=" p-2 h-10 w-10 rounded-full"
             >
-                <Image source={Images.left} className=' text-primary h-8 w-8' />
+                <Image source={Images.left} className=' text-blue-500 h-8 w-8' />
             </TouchableOpacity>
             <View className='flex-1 h-full w-full  justify-start items-start px-4'>
-                <Text className="text-primary text-2xl py-3 text-start w-[88%] font-heading">
+                <Text className="text-blue-500 text-2xl py-3 text-start w-[88%] font-heading">
                     Top Up Wallet
                 </Text>
                 <View className='w-full h-[80%]  p-4 space-y-4 justify-center items-center  self-center rounded-xl'>
@@ -36,7 +36,7 @@ export default function Topup({
                         Add Money
                     </Text>
                     <TextInput
-                        className={`bg-white border-none text-lg h-[45px] text-center font-heading px-4 py-2 w-[88%] `}
+                        className={`bg-white border border-blue-500 text-lg h-[45px] text-center font-heading px-4 py-2 w-[88%] `}
                         placeholder="1234"
                         value={amount}
                         onChangeText={(text) => setAmount(text)}
@@ -45,7 +45,7 @@ export default function Topup({
                     />
                     <TouchableOpacity
                         onPress={handleTopUp}
-                        className='bg-primary w-[88%] h-[45px] justify-center items-center'>
+                        className='bg-blue-500 w-[88%] h-[45px] justify-center items-center'>
                         {
                             loading ? (
                                 <ActivityIndicator size="small" color={"#fff"} />
